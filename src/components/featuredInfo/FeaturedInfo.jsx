@@ -1,39 +1,39 @@
 import "./featuredInfo.css";
 import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-// import { userRequest } from "../../requestMethods";
 import axios from "axios"
 
 export default function FeaturedInfo() {
-  const [income, setIncome] = useState([]);
-  const [perc, setPerc] = useState(0);
+  const [income, setIncome] = useState({total: 0, lastMonthTotal: 0});
 
   useEffect(() => {
     const getIncome = async () => {
       try {
-        const TOKEN = localStorage.getItem("token")
-        const res = await axios({
-          method: "GET",
-          url: `http://localhost:5000/api/orders/income`,
-          headers: { token: `Bearer ${TOKEN}` }
+        const TOKEN = localStorage.getItem("token");
+        const response = await axios.get(`http://localhost:5000/api/orders/income`, {
+          headers: { Authorization: `Bearer ${TOKEN}` },
         });
-        // const res = await userRequest.get("orders/income");
-        setIncome(res.data);
-        setPerc((res.data[1].total * 100) / res.data[0].total - 100);
-      } catch { }
+        const data = response.data;
+        const lastMonthTotal = data.length > 1 ? data[data.length - 2].total : 0;
+        setIncome({total: data[data.length - 1].total, lastMonthTotal: lastMonthTotal});
+      } catch (error) {
+        console.error(error);
+      }
     };
     getIncome();
   }, []);
 
+  const rate = ((income.total - income.lastMonthTotal) / income.lastMonthTotal) * 100;
+
   return (
     <div className="featured">
       <div className="featuredItem">
-        <span className="featuredTitle">Revanue</span>
+        <span className="featuredTitle">Revenue</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">${income[1]?.total}</span>
-          <span className="featuredMoneyRate">
-            %{Math.floor(perc)}{" "}
-            {perc < 0 ? (
+          <span className="featuredMoney">${income.total}</span>
+          <span className={`featuredMoneyRate ${rate < 0 ? 'negative' : ''}`}>
+            {rate.toFixed(2)}%{" "}
+            {rate < 0 ? (
               <ArrowDownward className="featuredIcon negative" />
             ) : (
               <ArrowUpward className="featuredIcon" />

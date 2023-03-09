@@ -5,9 +5,12 @@ import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
 import axios from "axios"
 import { useEffect, useState } from "react";
+import {useNavigate} from 'react-router-dom'
 
 export default function UserList() {
+  const navigate = useNavigate()
   const [users, setUsers] = useState([])
+  
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -77,9 +80,8 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
-              <button className="userListEdit">Edit</button>
-            </Link>
+              <button onClick={()=>navigate("/dashboard/user/" + params.row.id)} className="userListEdit">Edit</button>
+           
             <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}

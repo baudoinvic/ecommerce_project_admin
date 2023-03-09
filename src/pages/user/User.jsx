@@ -6,56 +6,55 @@ import {
   PhoneAndroid,
   Publish,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./user.css";
 
 
 export default function User() {
-
+const navigate = useNavigate()
 
   return (
     <div className="user">
       <div className="userTitleContainer">
         <h1 className="userTitle">Edit User</h1>
-        <Link to="/newUser">
-          <button className="userAddButton">Create</button>
-        </Link>
+          <button className="userAddButton" onClick={()=>navigate('/dashboard/newUser')}>Create</button>
+        
       </div>
       <div className="userContainer">
         <div className="userShow">
           <div className="userShowTop">
             <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src="https://th.bing.com/th/id/R.fc15c272ac709ac76e60d0898f65c3b6?rik=UN3UyXrjooL2Pg&pid=ImgRaw&r=0"
               alt=""
               className="userShowImg"
             />
             <div className="userShowTopTitle">
-              <span className="userShowUsername">Marie99</span>
-              <span className="userShowUserTitle">Software Engineer</span>
+              <span className="userShowUsername">your name</span>
+              <span className="userShowUserTitle">background</span>
             </div>
           </div>
           <div className="userShowBottom">
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">Marie99</span>
+              <span className="userShowInfoTitle">email</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
-              <span className="userShowInfoTitle">10.11.2000</span>
+              <span className="userShowInfoTitle">birth date</span>
             </div>
             <span className="userShowTitle">Contact Details</span>
             <div className="userShowInfo">
               <PhoneAndroid className="userShowIcon" />
-              <span className="userShowInfoTitle">+250783012138</span>
+              <span className="userShowInfoTitle">your phone number</span>
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">marie99@gmail.com</span>
+              <span className="userShowInfoTitle">email address</span>
             </div>
             <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">Rwanda | Kigali</span>
+              <span className="userShowInfoTitle">your country and city</span>
             </div>
           </div>
         </div>
@@ -67,7 +66,7 @@ export default function User() {
                 <label>Username</label>
                 <input
                   type="text"
-                  placeholder="marie99"
+                  placeholder=""
                   className="userUpdateInput"
                 />
               </div>
@@ -75,7 +74,7 @@ export default function User() {
                 <label>Full Name</label>
                 <input
                   type="text"
-                  placeholder="Marie99"
+                  placeholder=""
                   className="userUpdateInput"
                 />
               </div>
@@ -83,7 +82,7 @@ export default function User() {
                 <label>Email</label>
                 <input
                   type="text"
-                  placeholder="Marie99@gmail.com"
+                  placeholder=""
                   className="userUpdateInput"
                 />
               </div>
@@ -91,7 +90,7 @@ export default function User() {
                 <label>Phone</label>
                 <input
                   type="text"
-                  placeholder="+250783012138"
+                  placeholder=""
                   className="userUpdateInput"
                 />
               </div>
@@ -99,7 +98,7 @@ export default function User() {
                 <label>Address</label>
                 <input
                   type="text"
-                  placeholder="Rwanda | Kigali"
+                  placeholder=""
                   className="userUpdateInput"
                 />
               </div>
@@ -108,7 +107,7 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                  src="https://th.bing.com/th/id/R.fc15c272ac709ac76e60d0898f65c3b6?rik=UN3UyXrjooL2Pg&pid=ImgRaw&r=0"
                   alt=""
                 />
                 <label htmlFor="file">

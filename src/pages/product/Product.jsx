@@ -10,12 +10,14 @@ import axios from "axios";
 
 export default function Product() {
   const location = useLocation();
-  const productId = location.pathname.split("/")[2];
+  const productId = location.pathname.split("/")[3];
   const [pStats, setPStats] = useState([]);
 
   const product = useSelector((state) =>
-    state.product.products.find((product) => product._id === productId)
+    state.product?.products.find((product) => product?._id === productId)
   );
+
+   
 
   const MONTHS = useMemo(
     () => [
@@ -49,6 +51,7 @@ export default function Product() {
         const list = res.data.sort((a,b)=>{
             return a._id - b._id
         })
+        console.log(list)
         list.map((item) =>
           setPStats((prev) => [
             ...prev,
@@ -66,7 +69,7 @@ export default function Product() {
     <div className="product">
       <div className="productTitleContainer">
         <h1 className="productTitle">Product</h1>
-        <Link to="/newproduct">
+        <Link to="/dashboard/newproduct">
           <button className="productAddButton">Create</button>
         </Link>
       </div>
@@ -76,13 +79,13 @@ export default function Product() {
         </div>
         <div className="productTopRight">
           <div className="productInfoTop">
-            <img src={product.img} alt="" className="productInfoImg" />
-            <span className="productName">{product.title}</span>
+            <img src={product?.img} alt="" className="productInfoImg" />
+            <span className="productName">{product?.title}</span>
           </div>
           <div className="productInfoBottom">
             <div className="productInfoItem">
               <span className="productInfoKey">id:</span>
-              <span className="productInfoValue">{product._id}</span>
+              <span className="productInfoValue">{product?._id}</span>
             </div>
             <div className="productInfoItem">
               <span className="productInfoKey">sales:</span>
@@ -90,7 +93,7 @@ export default function Product() {
             </div>
             <div className="productInfoItem">
               <span className="productInfoKey">in stock:</span>
-              <span className="productInfoValue">{product.inStock}</span>
+              <span className="productInfoValue">{product?.inStock}</span>
             </div>
           </div>
         </div>
@@ -99,11 +102,11 @@ export default function Product() {
         <form className="productForm">
           <div className="productFormLeft">
             <label>Product Name</label>
-            <input type="text" placeholder={product.title} />
+            <input type="text" placeholder={product?.title} />
             <label>Product Description</label>
-            <input type="text" placeholder={product.desc} />
+            <input type="text" placeholder={product?.desc} />
             <label>Price</label>
-            <input type="text" placeholder={product.price} />
+            <input type="text" placeholder={product?.price} />
             <label>In Stock</label>
             <select name="inStock" id="idStock">
               <option value="true">Yes</option>
@@ -112,7 +115,7 @@ export default function Product() {
           </div>
           <div className="productFormRight">
             <div className="productUpload">
-              <img src={product.img} alt="" className="productUploadImg" />
+              <img src={product?.img} alt="" className="productUploadImg" />
               <label for="file">
                 <Publish />
               </label>

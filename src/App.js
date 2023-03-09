@@ -27,10 +27,10 @@ function App() {
 
               <Route exact path="/dashboard/home" element={<Home/>}/>
               <Route exact path="/dashboard/users" element={<UserList/>}/>
-              <Route exact path="/dashboard/user:id" element={<User/>}/>
+              <Route exact path="/dashboard/user/:id" element={<User/>}/>
               <Route exact path="/dashboard/newUser" element={<NewUser/>}/>
               <Route exact path="/dashboard/products" element={<ProductList/>}/>
-              <Route path="/dashboard/product/:id" element={<Product/>} />
+              <Route exact path="/dashboard/product/:id" element={<Product/>} />
               <Route exact path="/dashboard/newproduct" element={<NewProduct/>}/>
               </Route>
               

@@ -66,10 +66,13 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Notifications</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <MailOutline className="sidebarIcon" />
-              Mail
-            </li>
+             
+
+          <li className="sidebarListItem" onClick={() => window.open('mailto:admin@example.com')}>
+            <MailOutline className="sidebarIcon" />
+           Mail
+         </li>
+           
             <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
               Feedback
