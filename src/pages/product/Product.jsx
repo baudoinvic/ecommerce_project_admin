@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./product.css";
 import Chart from "../../components/chart/Chart";
 import { productData } from "../../dummyData";
@@ -10,100 +10,32 @@ import axios from "axios";
 
 export default function Product() {
   const location = useLocation();
-  const productId = location.pathname.split("/")[2];
+  const navigate = useNavigate();
+  const { id } = useParams();
+  console.log(id);
   const [pStats, setPStats] = useState([]);
 
-  const product = useSelector((state) =>
-    state.product.products.find((product) => product._id === productId)
+  const products = useSelector((state) =>
+    state.product.products
   );
 
-  const MONTHS = useMemo(
-    () => [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Agu",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    []
-  );
+  const product = products.find((p) => p._id === id);
 
-  useEffect(() => {
-    const getStats = async () => {
-      try {
-        const TOKEN = localStorage.getItem("token")
-        const res = await axios({
-          method: "GET",
-          url: `http://localhost:5000/api/orders/income?pid=${productId}`,
-          data: product,
-          headers: { token: `Bearer ${TOKEN}` }
-        });
-        // const res = await userRequest.get("orders/income?pid=" + productId);
-        const list = res.data.sort((a,b)=>{
-            return a._id - b._id
-        })
-        list.map((item) =>
-          setPStats((prev) => [
-            ...prev,
-            { name: MONTHS[item._id - 1], Sales: item.total },
-          ])
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getStats();
-  }, [productId, MONTHS]);
-
+  console.log(product);
   return (
     <div className="product">
       <div className="productTitleContainer">
-        <h1 className="productTitle">Product</h1>
-        <Link to="/newproduct">
-          <button className="productAddButton">Create</button>
-        </Link>
-      </div>
-      <div className="productTop">
-        <div className="productTopLeft">
-          <Chart data={pStats} dataKey="Sales" title="Sales Performance" />
-        </div>
-        <div className="productTopRight">
-          <div className="productInfoTop">
-            <img src={product.img} alt="" className="productInfoImg" />
-            <span className="productName">{product.title}</span>
-          </div>
-          <div className="productInfoBottom">
-            <div className="productInfoItem">
-              <span className="productInfoKey">id:</span>
-              <span className="productInfoValue">{product._id}</span>
-            </div>
-            <div className="productInfoItem">
-              <span className="productInfoKey">sales:</span>
-              <span className="productInfoValue">5123</span>
-            </div>
-            <div className="productInfoItem">
-              <span className="productInfoKey">in stock:</span>
-              <span className="productInfoValue">{product.inStock}</span>
-            </div>
-          </div>
-        </div>
+        <h1 className="productTitle">Edit Product</h1>
       </div>
       <div className="productBottom">
         <form className="productForm">
           <div className="productFormLeft">
             <label>Product Name</label>
-            <input type="text" placeholder={product.title} />
+            <input type="text" placeholder={product?.title} />
             <label>Product Description</label>
-            <input type="text" placeholder={product.desc} />
+            <input type="text" placeholder={product?.desc} />
             <label>Price</label>
-            <input type="text" placeholder={product.price} />
+            <input type="text" placeholder={product?.price} />
             <label>In Stock</label>
             <select name="inStock" id="idStock">
               <option value="true">Yes</option>
@@ -112,7 +44,7 @@ export default function Product() {
           </div>
           <div className="productFormRight">
             <div className="productUpload">
-              <img src={product.img} alt="" className="productUploadImg" />
+              <img src={product?.img} alt="" className="productUploadImg" />
               <label for="file">
                 <Publish />
               </label>
