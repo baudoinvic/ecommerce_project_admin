@@ -35,16 +35,20 @@ const Login = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        backgroundImage: 'url("https://coolbackgrounds.io/images/backgrounds/black/black-compute-ea4c57a4.png")',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+       
       }}
     >
       <input
-        style={{ padding: 10, marginBottom: 20 }}
+        style={{ padding: 10, width: "20%", marginBottom: 20 }}
         type="text"
         placeholder="username"
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
-        style={{ padding: 10, marginBottom: 20 }}
+        style={{ padding: 10, width: "20%", marginBottom: 20 }}
         type="password"
         placeholder="password"
         onChange={(e) => setPassword(e.target.value)}

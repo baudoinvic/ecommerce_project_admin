@@ -1,5 +1,5 @@
 import { loginFailure, loginStart, loginSuccess } from "./userRedux";
-import axios from "axios"
+import axios from "axios";
 import { publicRequest, userRequest } from "../requestMethods";
 import {
   getProductFailure,
@@ -20,8 +20,8 @@ export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/auth/login", user);
-    console.log(res.data)
-    localStorage.setItem("token", JSON.stringify(res.data.accessToken))
+    console.log(res.data);
+    localStorage.setItem("token", JSON.stringify(res.data.accessToken));
     dispatch(loginSuccess(res.data));
   } catch (err) {
     dispatch(loginFailure());
@@ -50,7 +50,7 @@ export const deleteProduct = async (id, dispatch) => {
     //     });
     // const res = await userRequest.delete(`/products/${id}`);
     dispatch(deleteProductSuccess(id));
-  } catch (err) { 
+  } catch (err) {
     dispatch(deleteProductFailure());
   }
 };
@@ -67,12 +67,13 @@ export const updateProduct = async (id, product, dispatch) => {
 export const addProduct = async (product, dispatch) => {
   dispatch(addProductStart());
   try {
-    const TOKEN = localStorage.getItem("token")
     const res = await axios({
-      method: "GET",
-      url: `http://localhost:5000/api/products`, 
+      method: "POST",
+      url: `http://localhost:5000/api/products`,
       data: product,
-      headers: { token: `Bearer ${TOKEN}` }
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
     dispatch(addProductSuccess(res.data));
   } catch (err) {

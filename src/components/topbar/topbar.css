@@ -32,6 +32,8 @@
   cursor: pointer;
   margin-right: 10px;
   color: #555;
+  font-size: 20px;
+  
 }
 
 .topIconBadge{
@@ -69,8 +71,8 @@
   }
 
   .imageModal {
-    max-width: 90%;
-    max-height: 90%;
+    max-width: 40%;
+    max-height: 40%;
     overflow: auto;
     background-color: white;
     padding: 1rem;

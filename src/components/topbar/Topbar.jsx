@@ -79,25 +79,19 @@ return (
 <span className="logo">admin</span>
 </div>
 <div className="topRight">
-<div className="topbarIconContainer">
-<NotificationsNone />
-<span className="topIconBadge">2</span>
-</div>
-<div className="topbarIconContainer">
-<Language />
-<span className="topIconBadge">2</span>
-</div>
+
 <div
 onClick={handleLogout}
 style={{
-cursor: "pointer"
+cursor: "pointer",
+
 }}
 className="topbarIconContainer"
 >
 Logout
 </div>
 <img
-src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+src= "https://th.bing.com/th/id/R.fc15c272ac709ac76e60d0898f65c3b6?rik=UN3UyXrjooL2Pg&pid=ImgRaw&r=0"
 alt=""
 className="topAvatar"
 onClick={handleImageClick} 
@@ -108,7 +102,7 @@ onClick={handleImageClick}
 <div className="imageModalOverlay" onClick={handleModalClose}>
 <div className="imageModal">
 <img
-           src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+           src= "https://th.bing.com/th/id/R.fc15c272ac709ac76e60d0898f65c3b6?rik=UN3UyXrjooL2Pg&pid=ImgRaw&r=0"
            alt=""
          />
 </div>

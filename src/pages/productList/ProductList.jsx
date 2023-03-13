@@ -1,14 +1,16 @@
 import "./productList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts } from "../../redux/apiCalls";
 
 export default function ProductList() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
+
 
   useEffect(() => {
     getProducts(dispatch);
@@ -46,9 +48,7 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/dashboard/product/" + params.row._id}>
-              <button className="productListEdit">Edit</button>
-            </Link>
+            <button onClick={() => navigate(`/dashboard/product/${params.row._id}`)} className="productListEdit">Edit</button>
             <DeleteOutline
               className="productListDelete"
               onClick={() => handleDelete(params.row._id)}
@@ -61,7 +61,21 @@ export default function ProductList() {
 
   return (
     <div className="productList">
+      <div style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        width: "100%",
+      }}><button style={{
+        width: "15em",
+        marginBottom: "10px",
+        marginTop: "10px",
+        marginRight: "50px",
+      }} onClick={() => navigate("/dashboard/newproduct")} className="productAddButton">Create a new product</button></div>
       <DataGrid
+        style={{
+          height: "70vh",
+        }}
         rows={products}
         disableSelectionOnClick
         columns={columns}
