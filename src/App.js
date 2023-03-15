@@ -8,7 +8,9 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
+import PaymentReport from "./pages/paymentreport/PaymentReport";
 import { DashboardLayout } from "./layouts/dashboard";
+
 import { useSelector } from "react-redux";
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
           <Route exact path="/dashboard/products" element={<ProductList />} />
           <Route path="/dashboard/product/:id" element={<Product />} />
           <Route exact path="/dashboard/newproduct" element={<NewProduct />} />
+          <Route exact path="/dashboard/paymentreport" element={<PaymentReport />} />
         </Route>
       </Routes>
     </BrowserRouter>

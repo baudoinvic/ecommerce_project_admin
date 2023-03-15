@@ -81,6 +81,7 @@ export default function UserList() {
         return (
           <>
               <button onClick={()=>navigate("/dashboard/user/" + params.row.id)} className="userListEdit">Edit</button>
+              
            
             <DeleteOutline
               className="userListDelete"

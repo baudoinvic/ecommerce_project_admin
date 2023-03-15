@@ -17,7 +17,7 @@ const navigate = useNavigate()
     <div className="user">
       <div className="userTitleContainer">
         <h1 className="userTitle">Edit User</h1>
-          <button className="userAddButton" onClick={()=>navigate('/dashboard/newUser')}>Create</button>
+          <button className="userAddButton" onClick={()=>navigate('/dashboard/NewUser')}>Create</button>
         
       </div>
       <div className="userContainer">
