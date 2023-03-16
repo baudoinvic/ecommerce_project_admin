@@ -19,9 +19,27 @@ export default function Product() {
     state.product.products
   );
 
-  const product = products.find((p) => p._id === id);
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    axios({
+      method: "PATCH",
+      url: `http://localhost:5000/api/products/${id}`,
+      data: currentProduct,
+    }).then((res) => {
+      console.log(res);
+      navigate("/dashboard/products");
+    })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  console.log(product);
+
+
+  const product = products.find((p) => p._id === id);
+  const [currentProduct, setCurrentProduct] = useState(product);
+
+  console.log(currentProduct);
   return (
     <div className="product">
       <div className="productTitleContainer">
@@ -31,13 +49,27 @@ export default function Product() {
         <form className="productForm">
           <div className="productFormLeft">
             <label>Product Name</label>
-            <input type="text" placeholder={product?.title} />
+            <input type="text" value={currentProduct?.title} onChange={(e) => {
+              setCurrentProduct({ ...currentProduct, title: e.target.value });
+            }} />
             <label>Product Description</label>
-            <input type="text" placeholder={product?.desc} />
+            <input type="text" value={currentProduct?.desc} onChange={
+              (e) => {
+                setCurrentProduct({ ...currentProduct, desc: e.target.value });
+              }
+            } />
             <label>Price</label>
-            <input type="text" placeholder={product?.price} />
+            <input type="text" value={currentProduct?.price} onChange={
+              (e) => {
+                setCurrentProduct({ ...currentProduct, price: e.target.value });
+              }
+            } />
             <label>In Stock</label>
-            <select name="inStock" id="idStock">
+            <select defaultValue={currentProduct.inStock} onChange={
+              (e) => {
+                setCurrentProduct({ ...currentProduct, inStock: e.target.value });
+              }
+            } name="inStock" id="idStock">
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
@@ -50,7 +82,7 @@ export default function Product() {
               </label>
               <input type="file" id="file" style={{ display: "none" }} />
             </div>
-            <button className="productButton">Update</button>
+            <button className="productButton" onClick={handleUpdate}>Update</button>
           </div>
         </form>
       </div>

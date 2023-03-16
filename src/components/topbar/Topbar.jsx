@@ -76,7 +76,7 @@ return (
 <div className="topbar">
 <div className="topbarWrapper">
 <div className="topLeft">
-<span className="logo">admin</span>
+<span className="logo">Admin</span>
 </div>
 <div className="topRight">
 

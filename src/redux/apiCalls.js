@@ -1,4 +1,5 @@
 import { loginFailure, loginStart, loginSuccess } from "./userRedux";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { publicRequest, userRequest } from "../requestMethods";
 import {
@@ -41,14 +42,12 @@ export const getProducts = async (dispatch) => {
 export const deleteProduct = async (id, dispatch) => {
   dispatch(deleteProductStart());
   try {
-    // const TOKEN = localStorage.getItem("token")
-    //     const res = await axios({
-    //       method: "GET",
-    //       url: `http://localhost:5000/api//products/${id}`,
-    //       data: product,
-    //       headers: { token: `Bearer ${TOKEN}` }
-    //     });
+    const res = await axios({
+      method: "DELETE",
+      url: `http://localhost:5000/api/products/${id}`,
+    });
     // const res = await userRequest.delete(`/products/${id}`);
+    console.log(res);
     dispatch(deleteProductSuccess(id));
   } catch (err) {
     dispatch(deleteProductFailure());

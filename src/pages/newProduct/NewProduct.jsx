@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./newProduct.css";
 import {
   getStorage,
@@ -7,14 +7,28 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
-import { addProduct } from "../../redux/apiCalls";
+import { useNavigate } from "react-router-dom";
+import { categories } from "../../data";
+import { addProductFailure, addProductSuccess } from "../../redux/productRedux";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 export default function NewProduct() {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
-  const [cat, setCat] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setInputs({
+      title: "",
+      desc: "",
+      price: "",
+      category: "computers",
+    });
+  }, []);
 
   const handleChange = (e) => {
     setInputs((prev) => {
@@ -22,11 +36,14 @@ export default function NewProduct() {
     });
   };
   const handleCat = (e) => {
-    setCat(e.target.value.split(","));
+    setInputs((prev) => {
+      return { ...prev, category: e.target.value };
+    });
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const product = { ...inputs, img: file };
 
@@ -37,13 +54,29 @@ export default function NewProduct() {
     data.append("title", inputs.title);
     data.append("desc", inputs.desc);
     data.append("price", inputs.price);
-    data.append("categories", inputs.categories);
+    data.append("category", inputs.category);
 
 
-    addProduct(data, dispatch);
+    try {
+      const res = await axios({
+        method: "POST",
+        url: `http://localhost:5000/api/products`,
+        data: data,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      dispatch(addProductSuccess(res.data));
+      navigate("/dashboard/products");
+      setLoading(false);
+    } catch (err) {
+      dispatch(addProductFailure());
+      setLoading(false);
+      setIsError(true);
+    }
   };
-     
-    
+
+
 
 
 
@@ -87,8 +120,14 @@ export default function NewProduct() {
           />
         </div>
         <div className="addProductItem">
-          <label>Categories</label>
-          <input name="categories" type="text" placeholder="jeans,skirts" onChange={handleChange} />
+          <label>Category</label>
+          <select defaultValue={inputs.categories} name="category" onChange={handleCat}>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.cat}>
+                {cat.title}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="addProductItem">
           <label>Stock</label>
@@ -97,8 +136,13 @@ export default function NewProduct() {
             <option value="false">No</option>
           </select>
         </div>
+        {isError && (
+          <p style={{
+            color: "red",
+          }}>Something went wrong, please try again</p>
+        )}
         <button onClick={handleClick} className="addProductButton">
-          Create
+          {loading ? "Loading..." : "Create"}
         </button>
       </form>
     </div>
